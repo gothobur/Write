@@ -599,6 +599,12 @@ void Clipboard::paste(Selection* sel, bool move)
 
 void Clipboard::saveSVG(std::ostream& file)
 {
+  // set document size so that nothing is clipped when pasted into, e.g., Jupyter; no effect on pasting back
+  //  into Write as text since outermost <svg> is removed unless it has a viewBox
+  Rect bbox = content->bounds();
+  content->setWidth(std::ceil(bbox.right));
+  content->setHeight(std::ceil(bbox.bottom));
+
   XmlStreamWriter xmlwriter;
   SvgWriter writer(xmlwriter);
   writer.serialize(content.get());

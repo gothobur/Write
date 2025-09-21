@@ -256,6 +256,7 @@ void ScribbleConfig::init()
   cfgS["newDocTitleFmt"] = "%b %e %Hh%M";
   // fallback fonts (user specified for now; maybe we try to figure out from locale in the future)
   cfgS["userFonts"] = "";
+  cfgS["shortcutKeys"] = "";
   // translations
   cfgS["translations"] = "";
   cfgS["revTranslations"] = "";

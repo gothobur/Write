@@ -721,6 +721,22 @@ void MainWindow::setupUI(ScribbleApp* a)
   selectFirst("#main-container")->addWidget(selPopup);
   // set up one-time help popups
   setupHelpTips();
+
+  // custom shortcuts - config format is "Ctrl+Shift+Z:actionRedo|Ctrl+..." - uses '|' and ':' since both of
+  //  these are shifted/uppercase, so shouldn't appear in shortcut key definition
+  const char* shortcutsStr = ScribbleApp::cfg->String("shortcutKeys");
+  auto shortcutsSplit = splitStringRef(StringRef(shortcutsStr), "|", true);
+  for(const StringRef& s : shortcutsSplit) {
+    auto keyaction = splitStringRef(s, ":");
+    if(keyaction.size() != 2) {
+      PLATFORM_LOG("Bad shortcut definition: %s\n", s.toString().c_str());
+      continue;
+    }
+    std::string key = keyaction[0].trimmed().toString();
+    std::string action = keyaction[1].trimmed().toString();
+    if(!key.empty())
+      shortcuts[key] = findAction(action.c_str());
+  }
 }
 
 Action* MainWindow::findAction(const char* name)

@@ -851,18 +851,16 @@ bool ScribbleApp::keyPressEvent(SDL_Event* event)
       std::string keystr;
       Uint16 mods = event->key.keysym.mod;
 #if PLATFORM_OSX
-      if(mods & KMOD_GUI) keystr.append("Ctrl+");  // Mac OS Cmd key
+      if(mods & KMOD_GUI) { keystr.append("Ctrl+"); }  // Mac OS Cmd key
 #else
-      if(mods & KMOD_CTRL) keystr.append("Ctrl+");
+      if(mods & KMOD_CTRL) { keystr.append("Ctrl+"); }
 #endif
-      if(mods & KMOD_ALT)
-        keystr.append("Alt+");
-      if(mods & KMOD_SHIFT)
-        keystr.append("Shift+");
+      if(mods & KMOD_ALT) { keystr.append("Alt+"); }
+      if(mods & KMOD_SHIFT) { keystr.append("Shift+"); }
       keystr.append(SDL_GetKeyName(event->key.keysym.sym));
       auto it = win->shortcuts.find(keystr);
       if(it != win->shortcuts.end()) {
-        if(it->second->enabled())
+        if(it->second && it->second->enabled())
           it->second->onTriggered(); //gui, event);
         return true;
       }
