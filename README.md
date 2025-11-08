@@ -17,7 +17,11 @@ To build executable `syncscribble/Release/Write`:
 * iOS:
  * build SDL: `cd SDL && git checkout write-mac && make -f ../scribbleres/SDL-Makefile.ios`
  * see [nanovgXC readme](https://github.com/styluslabs/nanovgXC?tab=readme-ov-file#example-app) for setup and then run `cd syncscribble && make` or use the [Xcode project](xcode/Write).
-* macOS: `cd syncscribble && make MACOS=1`
+* macOS:
+  * Install XCode command line tools if not installed: `xcode-select --install`
+  * Build SDL: `cd SDL && make -f ../scribbleres/SDL-Makefile.mac && cd ..`
+  * Build Write.app: `cd syncscribble && make MACOS=1`
+  * App executable location: `./MacRelease/Write.app`
 * Windows:
  * install Visual Studio (free Community Edition is fine) and [GNU make for Windows](http://www.equation.com/servlet/equation.cmd?fa=make), ensuring it is available in the path
  * in `syncscribble/Makefile`, set `DEPENDBASE` to the parent folder containing all dependencies that `make` should track
